@@ -3,8 +3,6 @@ const fetch = require('node-fetch');
 function renderWebmentionHtml(data) {
     let html = "";
 
-    html += `<script>console.table(data)</script>`;
-
     const webmentions = data.children;
     if (webmentions.length) {
         // now we're generating the actual list
@@ -65,7 +63,8 @@ exports.handler = async (event, context) => {
       .then((response) => response.json())
       .then((data) => ({
         statusCode: 200,
-        body: renderWebmentionHtml(data),
+        //body: renderWebmentionHtml(data),
+        body: data
       }))
       .catch((error) => ({ statusCode: 422, body: String(error) }));
   };
