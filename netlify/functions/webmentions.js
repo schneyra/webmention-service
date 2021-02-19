@@ -10,7 +10,7 @@ async function getWebmentions(url) {
     });
 }
 
-function renderWebmentions(webmentions) {
+function renderWebmentionHtml(webmentions) {
     let html = "";
 
     if (webmentions.length) {
@@ -71,7 +71,7 @@ exports.handler = async function(event, context) {
     const webmentions = await getWebmentions(event.queryStringParameters.url);
 
 
-    const html = renderWebmentionsHtml(webmentions.children);
+    const html = renderWebmentionHtml(webmentions.children);
     
     return {
         statusCode: 200,
