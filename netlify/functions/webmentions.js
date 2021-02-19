@@ -63,6 +63,9 @@ exports.handler = async (event, context) => {
       .then((response) => response.json())
       .then((data) => ({
         statusCode: 200,
+        headers: {
+            'Content-Type': 'text/html',
+          },
         body: `${renderWebmentionHtml(data)}`,
         //body: JSON.stringify(data)
       }))
