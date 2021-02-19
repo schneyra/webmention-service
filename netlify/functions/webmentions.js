@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+
 async function getWebmentions(url) {
     return new Promise((resolve, reject) => {
         fetch(
