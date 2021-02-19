@@ -59,7 +59,7 @@ function renderWebmentionHtml(data) {
 }
 
 exports.handler = async (event, context) => {
-    return fetch(`https://webmention.io/api/mentions.jf2?domain=martinschneider.me&per-page=200&sort-dir=up&target=${event.queryStringParameters.url}/`)
+    return fetch(`https://webmention.io/api/mentions.jf2?domain=martinschneider.me&per-page=200&sort-dir=up&target=${event.queryStringParameters.url}`)
       .then((response) => response.json())
       .then((data) => ({
         statusCode: 200,
