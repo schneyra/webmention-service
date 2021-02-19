@@ -69,12 +69,10 @@ function renderWebmentionHtml(webmentions) {
 
 exports.handler = async function(event, context) {
     const webmentions = await getWebmentions(event.queryStringParameters.url);
-
-
     const html = renderWebmentionHtml(webmentions.children);
     
     return {
         statusCode: 200,
-        body: JSON.stringify({message: html})
+        body: JSON.stringify({url: event.queryStringParameters.url, message: html})
     };
 }
