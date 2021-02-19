@@ -1,15 +1,5 @@
 const fetch = require('node-fetch');
 
-async function getWebmentions(url) {
-    return new Promise((resolve, reject) => {
-        fetch(
-            `https://webmention.io/api/mentions.jf2?domain=martinschneider.me&per-page=200&sort-dir=up&target=${url}/`
-        )
-            .then((response) => response.json())
-            .then((data) => resolve(data));
-    });
-}
-
 function renderWebmentionHtml(webmentions) {
     let html = "";
 
@@ -67,12 +57,12 @@ function renderWebmentionHtml(webmentions) {
     return html;
 }
 
-exports.handler = async function(event, context) {
-    const webmentions = await getWebmentions(event.queryStringParameters.url);
-    const html = renderWebmentionHtml(webmentions.children);
-    
-    return {
+exports.handler = async (event, context) => {
+    return fetch(`https://webmention.io/api/mentions.jf2?domain=martinschneider.me&per-page=200&sort-dir=up&target=${event.queryStringParameters.url}/`)
+      .then((response) => response.json())
+      .then((data) => ({
         statusCode: 200,
-        body: JSON.stringify({url: event.queryStringParameters.url, message: html})
-    };
-}
+        body: renderWebmentionHtml(data.children),
+      }))
+      .catch((error) => ({ statusCode: 422, body: String(error) }));
+  };
